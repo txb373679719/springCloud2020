@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @ Author txb
  * @ Date 2020/7/9 13:42
- * @ Description 主入口
+ * @ Description 支付模块主入口
  */
 @SpringBootApplication
 public class PaymentMain8001 {
