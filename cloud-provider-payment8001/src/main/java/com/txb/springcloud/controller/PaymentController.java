@@ -12,9 +12,11 @@ import javax.annotation.Resource;
  * @ Author txb
  * @ Date 2020/7/9 11:02
  * @ Description 支付模块
+ * 访问路径：http://localhost:8001/consumer/payment/get/32
  */
 @RestController
 @Slf4j
+@RequestMapping("/consumer")
 public class PaymentController {
 
     @Resource
