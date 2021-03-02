@@ -1,4 +1,4 @@
-package com.txb.springcloud.service.impl;
+package com.txb.springcloud.service;
 
 import com.txb.springcloud.dao.PaymentDao;
 import com.txb.springcloud.entities.Payment;
@@ -24,7 +24,7 @@ public class PaymentServiceImpl  implements PaymentService {
     }
 
     @Override
-    public Payment getPaymentById2(Long id) {
-        return paymentDao.getPaymentById2(id);
+    public Payment getPaymentById(Long id) {
+        return paymentDao.getPaymentById(id);
     }
 }
