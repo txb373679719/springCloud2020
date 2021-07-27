@@ -1,4 +1,4 @@
-package com.txb.study.test;
+package com.txb.study.test.normal;
 
 import com.txb.study.exception.BusinessException;
 

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <property name="logFileName">${sys:serverInstance}</property>
+        <property name="every_file_size">100MB</property>
+    </Properties>
+
+    <Appenders>
+
+        <console name="LOG.CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %p] R[%X{RequestID},%X{SessionID}] (%C..%M:%L)%n%m%n"/>
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        </console>
+
+        <RollingFile name="LOG.DEBUG" fileName="/tpdata/logs/newwiseye/debug_newwiseye_${logFileName}.log" filePattern="/tpdata/logs/newwiseye/debug_newwiseye_${logFileName}.log.%d{yyyy-MM-dd}-%i">
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %p] R[%X{RequestID},%X{SessionID}] (%C..%M:%L)%n%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="LOG.INFO" fileName="/tpdata/logs/newwiseye/info_newwiseye_${logFileName}.log" filePattern="/tpdata/logs/newwiseye/info_newwiseye_${logFileName}.log.%d{yyyy-MM-dd}-%i">
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %p] R[%X{RequestID},%X{SessionID}] (%C..%M:%L)%n%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+
+        <RollingFile name="LOG.ERROR" fileName="/tpdata/logs/newwiseye/error_newwiseye_${logFileName}.log" filePattern="/tpdata/logs/newwiseye/error_newwiseye_${logFileName}.log.%d{yyyy-MM-dd}-%i">
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %p] R[%X{RequestID},%X{SessionID}] (%C..%M:%L)%n%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="ons.LOG.info" fileName="/tpdata/logs/newwiseye/ons_newwiseye_${logFileName}.log" filePattern="/tpdata/logs/newwiseye/ons_newwiseye_${logFileName}.log.%d{yyyy-MM-dd}-%i">
+            <Filters>
+                <ThresholdFilter level="info"/>
+            </Filters>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS} %p] R[%X{RequestID},%X{SessionID}] (%M:%L)%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <!--输出控制台的配置  #本地调试放开下面配置-->
+        <!--                <Console name="CONSOLE" target="system_out"> -->
+        <!--                &lt;!&ndash; ThresholdFilter： 临界值过滤器 -->
+        <!--                level:设置过滤级别-->
+        <!--                onMatch:用于配置符合过滤条件的操作-->
+        <!--                onMismatch:用于配置不符合过滤条件的操作 &ndash;&gt;-->
+        <!--                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />-->
+        <!--                &lt;!&ndash;输出日志的格式 &ndash;&gt; -->
+        <!--                    <PatternLayout charset="UTF-8" pattern="%d{DEFAULT} %level [%class: %M] - %m%n" />  -->
+        <!--                </Console>  -->
+    </Appenders>
+
+    <Loggers>
+        <Logger name="feign.slf4j" level="error"/>
+        <Logger name="io.netty" level="error"/>
+        <Logger name="com.aliyun" level="error"/>
+        <Logger name="com.netflix" level="error"/>
+        <Logger name="com.baomidou" level="error"/>
+        <Logger name="com.zaxxer.hikari" level="error"/>
+        <Logger name="com.ulisesbocchio" level="error"/>
+        <Logger name="com.cntaiping.intserv.insu.util.UserSessionFilter" level="error"/>
+        <Logger name="org.mybatis" level="error"/>
+        <Logger name="org.apache" level="error"/>
+        <Logger name="org.hibernate" level="error"/>
+        <Logger name="org.springframework" level="error"/>
+        <Logger name="springfox.documentation" level="error"/>
+        <Logger name="net.sf.ehcache" level="error"/>
+        <Logger name="RocketmqClient" level="error"/>
+
+
+        <Logger name="net.bull.javamelod" level="error"/>
+
+        <logger name="RocketmqClient" additivity="false" >
+            <level value="info" />
+            <appender-ref ref="ons.LOG.info" />
+        </logger>
+
+        <logger name="RocketmqCommon" additivity="false">
+            <level value="warn" />
+            <appender-ref ref="ons.LOG.info" />
+        </logger>
+
+        <logger name="RocketmqRemoting" additivity="false">
+            <level value="warn" />
+            <appender-ref ref="ons.LOG.info" />
+        </logger>
+
+        <Root level="all">
+            <appender-ref ref="LOG.DEBUG" />
+            <appender-ref ref="LOG.INFO" />
+            <appender-ref ref="LOG.ERROR" />
+            <!--日志输出到console #本地调试放开下面注释-->
+            <!--            <appender-ref ref="CONSOLE" />-->
+        </Root>
+    </Loggers>
+</Configuration>
