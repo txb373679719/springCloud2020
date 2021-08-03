@@ -3,7 +3,7 @@ package com.txb.study.test.threadBasic.DaemonThread;
 /**
  * @ Author txb
  * @ Date 2021/8/3 16:54
- * @ Description TODO
+ * @ Description 守护线程
  */
 public class DaemonThreadTest {
     public static void main(String[] args) {

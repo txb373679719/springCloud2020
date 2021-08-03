@@ -3,7 +3,6 @@ package com.txb.study.test.threadBasic.ThreadName;
 /**
  * @ Author txb
  * @ Date 2021/8/3 15:42
- * @ Description TODO
  */
 public class TestCurrentThread {
     public static void main(String[] args) {
